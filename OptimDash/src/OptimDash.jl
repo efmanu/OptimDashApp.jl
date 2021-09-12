@@ -15,20 +15,16 @@ y_graph1 = []
 itr = 0
 eval_f = nothing
 range_value = []
-q_x = []
-q_u = []
 
 function make_app()
     global chn, x_graph, y_graph, itr, eval_f
-    global range_value, q_x, q_u
+    global range_value
 
     chn = Base.Channel{Vector{Float64}}(Inf)
     x_graph = []
 	y_graph = []
     y_graph1 = []
     range_value = []
-    q_x = []
-    q_u = []
     itr = 0
     eval_f = nothing
     
@@ -103,8 +99,6 @@ function make_app()
             x = range_value[1], y = range_value[2], 
             z = z
         )
-        quiver_plt =  quiver(x, u; scale = 1.0)
-
         scatter_plt = scatter(
             ;x=y_graph, y=y_graph1, 
             mode="lines", line_color="green"
