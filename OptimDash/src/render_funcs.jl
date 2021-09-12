@@ -34,7 +34,9 @@ function render_func_init()
     return dbc_col([
         html_div([
             render_function(),        
-            render_init()
+            render_init(),
+            render_lowerbound(),
+            render_upperbound()
         ]),        
     ], md=4)
 end
@@ -58,11 +60,41 @@ function render_init()
             dbc_cardbody([
                 html_h4("Enter Intial Conditions", className="card-title"),
                 html_div([
-                    dbc_textarea(
+                    dbc_input(
                         id = "dopt-user-func-init",
                         bs_size="lg",
                         className="mb-3",
                         value="[0.0, 0.0]",
+                    )
+                ]),
+            ])
+        ])
+end
+function render_lowerbound()
+    return dbc_card([
+            dbc_cardbody([
+                html_h4("Enter Lower Bound", className="card-title"),
+                html_div([
+                    dbc_input(
+                        id = "dopt-user-lower-bound",
+                        bs_size="lg",
+                        className="mb-3",
+                        value="[0.9998, 0.9998]",
+                    )
+                ]),
+            ])
+        ])
+end
+function render_upperbound()
+    return dbc_card([
+            dbc_cardbody([
+                html_h4("Enter Upper Bound", className="card-title"),
+                html_div([
+                    dbc_input(
+                        id = "dopt-user-upper-bound",
+                        bs_size="lg",
+                        className="mb-3",
+                        value="[1.0008, 1.0008]",
                     )
                 ]),
             ])

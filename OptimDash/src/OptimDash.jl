@@ -14,14 +14,17 @@ y_graph = []
 y_graph1 = []
 itr = 0
 eval_f = nothing
+range_value = []
 
 function make_app()
     global chn, x_graph, y_graph, itr, eval_f
+    global range_value
 
     chn = Base.Channel{Vector{Float64}}(Inf)
     x_graph = []
 	y_graph = []
     y_graph1 = []
+    range_value = []
     itr = 0
     eval_f = nothing
     
@@ -36,18 +39,26 @@ function make_app()
         Output("dopt-params-plot-loc", "children"),      
         Input("dopt-btn-optim", "n_clicks"),
         State("dopt-user-funcs", "value"),
-        State("dopt-user-func-init", "value")
-    ) do n_clicks, user_funcs, funcs_init
+        State("dopt-user-func-init", "value"),
+        State("dopt-user-lower-bound", "value"),
+        State("dopt-user-upper-bound", "value")
+    ) do n_clicks, user_funcs, funcs_init, lb, ub
         ctx = callback_context()
         if isempty(ctx.triggered) || (user_funcs isa Nothing) || (funcs_init isa Nothing)
             throw(PreventUpdate())
         end
         global chn, eval_f, x_graph, y_graph, y_graph1, itr
+        global range_value
         x_graph = []
         y_graph = []
         y_graph1 = []
+        
         itr = 0
-        eval_f, init_f = eval_definition(user_funcs, funcs_init)
+        eval_f, init_f, lb_f, ub_f = eval_definition(
+            user_funcs, funcs_init, lb, ub
+        )
+        range_value = copy([range(lb_f[i], ub_f[i], length=100) for i in 1:2])
+        
         if length(init_f) != 2
             throw(PreventUpdate())
         end
@@ -73,6 +84,7 @@ function make_app()
         prevent_initial_call=true) do n, heat_fig, state_fig
         st = false
         global x_graph, y_graph, y_graph1, chn, itr, eval_f
+        global range_value
         if isready(chn)
             val = take!(chn)
             itr += 1
@@ -82,8 +94,17 @@ function make_app()
         else
             st = true
         end
-        z = eval_f.(vcat.(y_graph, y_graph1'))
-        fig = PlotlyJS.plot(heatmap(x = y_graph, y = y_graph1, z = z))
+        a = range(0.9998, 1.0008, length=100)
+        z = eval_f.(vcat.(range_value[1], range_value[2]'))
+        heat_plt = heatmap(
+            x = a, y = a, 
+            z = rand(a,length(a), length(a))
+        )
+        scatter_plt = scatter(
+            ;x=y_graph, y=y_graph1, 
+            mode="lines", line_color="green"
+        )
+        fig = PlotlyJS.plot([scatter_plt, heat_plt])
         return fig,
             Dict(
                 "data" => [
