@@ -15,16 +15,20 @@ y_graph1 = []
 itr = 0
 eval_f = nothing
 range_value = []
+q_x = []
+q_u = []
 
 function make_app()
     global chn, x_graph, y_graph, itr, eval_f
-    global range_value
+    global range_value, q_x, q_u
 
     chn = Base.Channel{Vector{Float64}}(Inf)
     x_graph = []
 	y_graph = []
     y_graph1 = []
     range_value = []
+    q_x = []
+    q_u = []
     itr = 0
     eval_f = nothing
     
@@ -94,12 +98,13 @@ function make_app()
         else
             st = true
         end
-        a = range(0.9998, 1.0008, length=100)
         z = eval_f.(vcat.(range_value[1], range_value[2]'))
         heat_plt = heatmap(
-            x = a, y = a, 
-            z = rand(a,length(a), length(a))
+            x = range_value[1], y = range_value[2], 
+            z = z
         )
+        quiver_plt =  quiver(x, u; scale = 1.0)
+
         scatter_plt = scatter(
             ;x=y_graph, y=y_graph1, 
             mode="lines", line_color="green"
