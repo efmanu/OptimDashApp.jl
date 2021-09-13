@@ -6,7 +6,7 @@ function render_all()
         dbc_row([
             render_func_init(),
             dbc_col([
-                dbc_button("Optimize!", color="success", id="dopt-btn-optim")
+                dbc_button("Optimize", color="success", id="dopt-btn-optim")
             ], md =2),            
             render_plots()
         ])
@@ -17,15 +17,15 @@ function render_info()
         dbc_jumbotron([
             html_h1("Dash Optim App", className="dopt-display-3"),
             html_p(
-                "Web app to optimize various functions with the help of Dash.jl and Optim.jl ",
+                "Web app to optimize functions of 2 variables using Optim.jl, created with Dash.jl.",
                 className="lead",
             ),
             html_hr(className="my-2"),
             html_p(
-                "Enter functions and initial conditions in the input boxes and press optimize button",
+                "Enter the objective function and initial solution in the input boxes and press the \"Optimize\" button",
             ),
             html_p(
-                "NB: Only functions with 2 parameters",
+                "NB: Only functions of 2 variables are supported.",
             )
         ])
     ])
