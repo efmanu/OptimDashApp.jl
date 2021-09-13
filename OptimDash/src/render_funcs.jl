@@ -6,7 +6,7 @@ function render_all()
         dbc_row([
             render_func_init(),
             dbc_col([
-                dbc_button("Optimize !", color="success", id="dopt-btn-optim")
+                dbc_button("Optimize!", color="success", id="dopt-btn-optim")
             ], md =2),            
             render_plots()
         ])
@@ -35,21 +35,19 @@ function render_func_init()
         html_div([
             render_function(),        
             render_init(),
-            render_lowerbound(),
-            render_upperbound()
         ]),        
     ], md=4)
 end
 function render_function()
     return dbc_card([
         dbc_cardbody([
-            html_h4("Enter Function Defnition", className="card-title"),
+            html_h4("Enter the objective function:", className="card-title"),
             html_div([
                 dbc_textarea(
                     id = "dopt-user-funcs",
                     bs_size="lg",
                     className="mb-3",
-                    value="f(x) = (1.0 - x[1])^2 + 100.0 * (x[2] - x[1]^2)^2",
+                    value="f(x) = x[1]^2 + 3*x[2]^2",
                 )
             ]),
         ])
@@ -58,43 +56,13 @@ end
 function render_init()
     return dbc_card([
             dbc_cardbody([
-                html_h4("Enter Intial Conditions", className="card-title"),
+                html_h4("Enter the intial solution:", className="card-title"),
                 html_div([
-                    dbc_input(
+                    dbc_textarea(
                         id = "dopt-user-func-init",
                         bs_size="lg",
                         className="mb-3",
-                        value="[0.0, 0.0]",
-                    )
-                ]),
-            ])
-        ])
-end
-function render_lowerbound()
-    return dbc_card([
-            dbc_cardbody([
-                html_h4("Enter Lower Bound", className="card-title"),
-                html_div([
-                    dbc_input(
-                        id = "dopt-user-lower-bound",
-                        bs_size="lg",
-                        className="mb-3",
-                        value="[0.9998, 0.9998]",
-                    )
-                ]),
-            ])
-        ])
-end
-function render_upperbound()
-    return dbc_card([
-            dbc_cardbody([
-                html_h4("Enter Upper Bound", className="card-title"),
-                html_div([
-                    dbc_input(
-                        id = "dopt-user-upper-bound",
-                        bs_size="lg",
-                        className="mb-3",
-                        value="[1.0008, 1.0008]",
+                        value="[2.0, -1.0]",
                     )
                 ]),
             ])
@@ -111,13 +79,6 @@ function render_liveupdates()
             n_intervals=0,
             disabled=false
         ),
-        dcc_graph(id="dopt-heat-map",
-            figure=Dict(
-                "data" => [
-                    Dict("x" => [], "y" => []),
-                ]
-            )
-        ),
         dcc_graph(id="dopt-params-state",
             figure=Dict(
                 "data" => [
@@ -128,5 +89,5 @@ function render_liveupdates()
     ])
 end
 function render_plots()
-    return dbc_col(id="dopt-params-plot-loc", md =6)
+    return dbc_col(id="dopt-params-plot-loc", md = 6)
 end
