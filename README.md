@@ -17,7 +17,7 @@ From the project folder, enter the following commands in Julia REPL
 ##### Step 2: Open App in browser
 ![3](https://user-images.githubusercontent.com/22251968/132993642-e3b82795-1b00-4369-8115-4aad2e44f27b.PNG)
 ##### Step 2: Configurations for optimization
-![Animation](![Animation1](https://user-images.githubusercontent.com/22251968/132994748-f696aee1-dc4c-43b4-8275-e78f1c5ce061.gif))
+![Animation](https://user-images.githubusercontent.com/22251968/132994748-f696aee1-dc4c-43b4-8275-e78f1c5ce061.gif)
 
 ### Deploy in Herokuapp
 From the project folder, enter the following commands in command line/terminal etc.
