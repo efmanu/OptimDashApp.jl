@@ -10,6 +10,8 @@ From the project folder, enter the following commands in Julia REPL
     julia>Pkg.activate(".")
     julia>include("run.jl")
 ```
+### Run Optimization
+![Animation6](https://user-images.githubusercontent.com/22251968/133268423-16f3e186-486a-4ef6-af10-a12281c6960a.gif)
 
 ### Deploy in Herokuapp
 From the project folder, enter the following commands in command line/terminal etc.
